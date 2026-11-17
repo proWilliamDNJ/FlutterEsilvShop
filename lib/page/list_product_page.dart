@@ -25,7 +25,7 @@ class ListProductPage extends ConsumerWidget {
           ),
         ],
       ),
-      body: FutureBuilder(
+      body: FutureBuilder<List<Product>>(
         future: fetchProducts(),
         builder: (context, asyncSnapshot) {
           if (asyncSnapshot.hasData && asyncSnapshot.data != null) {

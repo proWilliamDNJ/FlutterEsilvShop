@@ -5,6 +5,7 @@ class Product {
   final String category;
   final String image;
   final num price;
+  final double rate;
 
   //Constructeur avec les paramètres nommés "required"
   Product({
@@ -14,6 +15,7 @@ class Product {
     required this.price,
     required this.category,
     required this.description,
+    required this.rate,
   });
   String getPrice() => "${price.toStringAsFixed(2)}€";
 
@@ -25,6 +27,7 @@ class Product {
       'category': this.category,
       'image': this.image,
       'price': this.price,
+      'rate': this.rate,
     };
   }
   bool operator ==(Object other) {
@@ -42,6 +45,9 @@ class Product {
       category: map['category'] as String,
       image: map['image'] as String,
       price: map['price'] as num,
+      rate: (map['rating'] != null && map['rating']['rate'] != null)
+          ? (map['rating']['rate'] as num).toDouble()
+          : 0.0,
     );
   }
 

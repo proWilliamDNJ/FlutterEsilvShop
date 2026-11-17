@@ -15,6 +15,8 @@ class Cart extends _$Cart {
   }
 
   void remove(Product product) {
-    state = state.where((element) => element != product).toList();
+    final newState = [...state];
+    newState.remove(product);
+    state = newState;
   }
 }

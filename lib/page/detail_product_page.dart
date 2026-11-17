@@ -41,11 +41,31 @@ class DetailProductPage extends ConsumerWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
               children: [
+                Row(
+                  children: List.generate(5, (index) {
+                    if (product.rate >= index + 1) {
+                      return Icon(Icons.star, color: Colors.amber, size: 20);
+                    } else if (product.rate >= index + 0.5) {
+                      return Icon(Icons.star_half, color: Colors.amber, size: 20);
+                    } else {
+                      return Icon(Icons.star_border, color: Colors.amber, size: 20);
+                    }
+                  }),
+                ),
+                const SizedBox(width: 8),
+                Text("${product.rate}/5"),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Row(
+              children: [
                 Expanded(
                   child: Text(
                     product.title,
                     style: Theme.of(context).textTheme.titleLarge,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -59,7 +79,7 @@ class DetailProductPage extends ConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: Text(product.category),
+            child: Chip(label: Text(product.category)),
           ),
           if(ref.watch(cartProvider).contains(product))
             Chip(label: Text("LE PRODUIT EST DANS LE PANIER")),
