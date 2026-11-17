@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../model/cart.dart';
 import '../model/product.dart';
 
-class DetailProductPage extends StatelessWidget {
+class DetailProductPage extends ConsumerWidget {
   final Product product;
 
   const DetailProductPage({required this.product, super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -20,7 +21,7 @@ class DetailProductPage extends StatelessWidget {
           IconButton(
             onPressed: () => context.go('/cart'),
             icon: Badge.count(child: Icon(Icons.shopping_cart),
-                count: context.watch<Cart>().products.length),
+                count: ref.watch(cartProvider).length),
           ),
         ],
       ),
@@ -60,7 +61,7 @@ class DetailProductPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(product.category),
           ),
-          if(context.read<Cart>().products.contains(product))
+          if(ref.watch(cartProvider).contains(product))
             Chip(label: Text("LE PRODUIT EST DANS LE PANIER")),
           Spacer(),
           Padding(
@@ -69,7 +70,7 @@ class DetailProductPage extends StatelessWidget {
               width: MediaQuery.of(context).size.width,
               child: FilledButton(
                 onPressed: () {
-                  context.read<Cart>().add(product);
+                  ref.read(cartProvider.notifier).add(product);
                 },
                 child: Text("Ajouter au panier"),
               ),
